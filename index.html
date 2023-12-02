@@ -26,7 +26,7 @@
         width: 50px;
         height: 50px;
         font-size: 14px;
-        border-right: 3px solid #ccc;
+        border-right: 3px solid #fff;
         border-bottom: 1px solid #ccc;
         /* 縦は中央、横は右寄せのflex */
         display: flex;
@@ -95,12 +95,13 @@
       }
 
       #button-change-scale {
-        width: 100px;
+        width: 90%;
         height: 50px;
-        font-size: 14px;
+        font-size: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        background-color: #fff;
+        color:#fff;
+        background-color: #666;
         margin: 0 auto;
         display: flex;
         flex-direction: row;
@@ -128,6 +129,14 @@
     >
       Major/Minor
     </button>
+
+    <div>
+      <pre>
+        idea note
+        コード進行サンプルも出したいかも
+        ダイアトニックがわかるといいかも
+      </pre>
+    </div>
 
     <script>
       // メジャーかマイナーかのスケールを格納する
@@ -171,7 +180,16 @@
         // すべてのfretを削除する。
         document.getElementById("fretboard").innerHTML = "";
         // ボタンの表記を更新する。
-        document.getElementById("button-change-scale").innerHTML = scale;
+        // メジャーなら背景色を黄色に、マイナーなら背景色を青にする。
+        if (scale === "major") {
+          document.getElementById("button-change-scale").style.backgroundColor =
+            "#880";
+          document.getElementById("button-change-scale").innerHTML = "メジャー😊";
+        } else {
+          document.getElementById("button-change-scale").style.backgroundColor =
+            "#27a";
+          document.getElementById("button-change-scale").innerHTML = "マイナー🌝";
+        }
         // Create 22 frets。 これらの要素は横に並ぶが、中身は縦に並ぶ。
         for (let i = 0; i < 22; i++) {
           let fret = document.createElement("div");
@@ -238,13 +256,13 @@
             if (scale === "minor") {
               if (
                 relativeNoteIndex === 0 ||
-                relativeNoteIndex === 2 ||
+                relativeNoteIndex === 3 ||
                 relativeNoteIndex === 5 ||
                 relativeNoteIndex === 7 ||
-                relativeNoteIndex === 9
+                relativeNoteIndex === 10
               ) {
                 string.style.borderRight = "3px solid #0af";
-              } else if (relativeNoteIndex === 3 || relativeNoteIndex === 10) {
+              } else if (relativeNoteIndex === 2 || relativeNoteIndex === 8) {
                 string.style.borderRight = "3px #0af dashed";
               }
             }
