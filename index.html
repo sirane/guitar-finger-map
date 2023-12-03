@@ -23,8 +23,8 @@
         border-right: 3px solid black;
       }
       .string {
-        width: 50px;
-        height: 50px;
+        width: 48px;
+        height: 30px;
         font-size: 14px;
         border-right: 3px solid #fff;
         border-bottom: 1px solid #ccc;
@@ -96,7 +96,7 @@
 
       #button-change-scale {
         width: 90%;
-        height: 50px;
+        height: 30px;
         font-size: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -107,6 +107,8 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        position:fixed;
+        left:0;
       }
     </style>
   </head>
@@ -130,7 +132,7 @@
       Major/Minor
     </button>
 
-    <div>
+    <div style="margin-top:50px">
       <pre>
         idea note
         コード進行サンプルも出したいかも
@@ -262,7 +264,7 @@
                 relativeNoteIndex === 10
               ) {
                 string.style.borderRight = "3px solid #0af";
-              } else if (relativeNoteIndex === 2 || relativeNoteIndex === 8) {
+              } else if (relativeNoteIndex === 1 || relativeNoteIndex === 8) {
                 string.style.borderRight = "3px #0af dashed";
               }
             }
