@@ -240,31 +240,23 @@
             }
             string.innerHTML = `${note} ${notes[note_index]}`;
 
-            // scaleがmajorの場合、relativeNoteIndexからの相対度数が1,3,5,6,8,10,12の場合はborder-rightをfocus。特に1,3,5,8,10は強調
+            // scaleがmajorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
             if (scale === "major") {
-              if (
-                relativeNoteIndex === 0 ||
-                relativeNoteIndex === 2 ||
-                relativeNoteIndex === 4 ||
-                relativeNoteIndex === 7 ||
-                relativeNoteIndex === 9
-              ) {
+              const majorNoteIndexIndices_penta = [0, 2, 4, 7, 9];
+              const majorNoteIndexIndices = [5, 11];
+              if (majorNoteIndexIndices_penta.includes(relativeNoteIndex)) {
                 string.style.borderRight = "3px solid #0af";
-              } else if (relativeNoteIndex === 5 || relativeNoteIndex === 10) {
+              } else if (majorNoteIndexIndices.includes(relativeNoteIndex)) {
                 string.style.borderRight = "3px #0af dashed";
               }
             }
-            // scaleがminorの場合、relativeNoteIndexからの相対度数が1,3,4,6,8,9,11の場合はborder-rightをfocus。特に1,4,6,8,11は強調
+            // scaleがminorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
             if (scale === "minor") {
-              if (
-                relativeNoteIndex === 0 ||
-                relativeNoteIndex === 3 ||
-                relativeNoteIndex === 5 ||
-                relativeNoteIndex === 7 ||
-                relativeNoteIndex === 10
-              ) {
+              const minorNoteIndexIndices_penta = [0, 3, 5, 7, 10];
+              const minorNoteIndexIndices = [2, 8];
+              if (minorNoteIndexIndices_penta.includes(relativeNoteIndex)) {
                 string.style.borderRight = "3px solid #0af";
-              } else if (relativeNoteIndex === 1 || relativeNoteIndex === 8) {
+              } else if (minorNoteIndexIndices.includes(relativeNoteIndex)) {
                 string.style.borderRight = "3px #0af dashed";
               }
             }
