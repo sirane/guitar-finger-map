@@ -1,0 +1,159 @@
+h1 {
+  font-size: 30px;
+  color: #666;
+}
+h2 {
+  font-size: 20px;
+  color: #666;
+}
+h3 {
+  font-size: 16px;
+  color: #666;
+  margin: 0 0;
+}
+item-caption {
+  display: inline-block;
+}
+#fretboard {
+  width: 100%;
+  height: 100%;
+  color: #666;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.fret {
+  width: max-content;
+  border-bottom: 1px solid #666;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+/* 0fret目だけ右線を強調 */
+.fret:first-child {
+  border-right: 3px solid black;
+}
+.string {
+  min-width: 20px;
+  max-width: 48px;
+  height: 25px;
+  font-size: 14px;
+  border-right: 5px solid #fff;
+  border-bottom: 1px solid #888;
+  /* 縦は中央、横は右寄せのflex */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.highlight {
+  background-color: yellow;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: black;
+  border: 1px solid white;
+  margin: 0 auto;
+}
+.double-dot {
+  width: 30px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: black;
+  border: 1px solid white;
+  margin: 0 auto;
+}
+note-root {
+  width: 20px;
+  color: #00f;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #00f 3px solid;
+}
+note-3rd {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #00f 3px solid;
+}
+note-5th {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #00f 3px solid;
+}
+note-7th {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #f6f 3px solid;
+}
+note-9th {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #f6f 3px solid;
+}
+note-11th {
+  width: 20px;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: auto;
+  margin-right: 5px;
+  border-bottom: #f6f 3px solid;
+}
+
+#fret-control {
+  width: 95%;
+  height: 80px;
+  border: 1px solid #666;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  left:0;
+}
+
+#button-change-scale {
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color:#fff;
+  background-color: #666;
+  left:0;
+}
+
+/* ラジオボタンの装飾 */
+.radio-group {
+  margin-left: 10px;
+  padding: 2px 5px;
+  background-color: #ccc;
+}
+.radio-group input {
+  font-size: large;
+}
+
+.idea-note{
+  margin-top:100px;
+  border-radius: 5px;
+  color:#444;
+  background-color: #ddd;
+}

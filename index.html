@@ -1,135 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #fretboard {
-        width: 100%;
-        height: 100%;
-        color: #666;
-        border: 1px solid black;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-      }
-      .fret {
-        width: max-content;
-        border-bottom: 1px solid #666;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-      }
-      /* 0fret目だけ右線を強調 */
-      .fret:first-child {
-        border-right: 3px solid black;
-      }
-      .string {
-        width: 48px;
-        height: 30px;
-        font-size: 14px;
-        border-right: 3px solid #fff;
-        border-bottom: 1px solid #ccc;
-        /* 縦は中央、横は右寄せのflex */
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-      }
-      .highlight {
-        background-color: yellow;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: black;
-        border: 1px solid white;
-        margin: 0 auto;
-      }
-      .double-dot {
-        width: 30px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: black;
-        border: 1px solid white;
-        margin: 0 auto;
-      }
-      note-root {
-        width: 20px;
-        color: #00f;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #00f 3px solid;
-      }
-      note-3rd {
-        width: 20px;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #00f 3px solid;
-      }
-      note-5th {
-        width: 20px;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #00f 3px solid;
-      }
-      note-7th {
-        width: 20px;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #f6f 3px solid;
-      }
-      note-9th {
-        width: 20px;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #f6f 3px solid;
-      }
-      note-11th {
-        width: 20px;
-        text-align: center;
-        font-weight: bold;
-        flex-basis: auto;
-        margin-right: 5px;
-        border-bottom: #f6f 3px solid;
-      }
-
-      #button-change-scale {
-        width: 90%;
-        height: 30px;
-        font-size: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        color:#fff;
-        background-color: #666;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        position:fixed;
-        left:0;
-      }
-    </style>
+    <!-- CSSファイルのロード -->
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js"></script>
+    <meta charset="utf-8" />
+    <title>ぎたたに慣れてこウェイウェイ</title>
   </head>
   <body>
     <div id="fretboard">
       <!-- Frets are created here by JavaScript -->
     </div>
-
-    <!-- メジャーかマイナーか切り替えるボタン。scaleを更新しgenerateFretBoard()を呼び出す -->
-    <button
-      id="button-change-scale"
-      onclick="
+    <div id="fret-control">
+      <!-- メジャーかマイナーか切り替えるボタン。scaleを更新しgenerateFretBoard()を呼び出す -->
+      <button
+        id="button-change-scale"
+        onclick="
       if (scale === 'major') {
         scale = 'minor';
       } else {
@@ -137,185 +23,60 @@
       }
         generateFretBoard();
     "
-    >
-      Major/Minor
-    </button>
+      >
+        Major/Minor
+      </button>
+      <!-- radio buttons: display mode -->
+      <div>
+        <div class="radio-group">
+          <item-caption>code階名</item-caption>
+          <input
+            type="radio"
+            id="radio-code-info-1"
+            name="code-info"
+            value="degree-name"
+            checked
+            onchange="generateFretBoard();"
+          />
+          <label for="radio-code-info-1">出す</label>
+          <input
+            type="radio"
+            id="radio-code-info-2"
+            name="code-info"
+            value="gone"
+            onchange="generateFretBoard();"
+          />
+          <label for="radio-code-info-2">消す</label>
+        </div>
+        <div class="radio-group">
+          <item-caption>表示モード</item-caption>
+          <input
+            type="radio"
+            id="radio-display-mode-1"
+            name="display-mode"
+            value="code"
+            checked
+            onchange="generateFretBoard();"
+          />
+          <label for="radio-display-mode-1">code-tones/scale</label>
+          <input
+            type="radio"
+            id="radio-display-mode-2"
+            name="display-mode"
+            value="penta"
+            onchange="generateFretBoard();"
+          />
+          <label for="radio-display-mode-2">penta map</label>
+        </div>
+      </div>
+    </div>
 
-    <div style="margin-top:50px">
+    <div class="idea-note">
       <pre>
         idea note
         コード進行サンプルも出したいかも
         ダイアトニックがわかるといいかも
       </pre>
     </div>
-
-    <script>
-      // メジャーかマイナーかのスケールを格納する
-      let scale = "major";
-      // フォーカスされている音名indexを格納する。
-      let focusNoteIndex = 0;
-      // 12音名をAからGまで配列に格納する。
-      let notes = [
-        "A",
-        "As",
-        "B",
-        "C",
-        "Cs",
-        "D",
-        "Ds",
-        "E",
-        "F",
-        "Fs",
-        "G",
-        "Gs",
-      ];
-      // 12音名ごとの色を配列に格納する。シャープやフレットは真っ白で、他の色はそれぞれ違った薄い色を採用する。
-      let colors = [
-        "#ffccbb", // A
-        "#ffffff",
-        "#ffccdd",
-        "#ccffff",
-        "#ffffff",
-        "#ccddff", // D
-        "#ffffff",
-        "#ddccff",
-        "#bbffdd",
-        "#ffffff",
-        "#eeffcc", // G
-        "#ffffff",
-      ];
-      // 1弦から6弦までの0fretの音名 をnotesのindexで配列に格納する。
-      let openStrings = [7, 2, 10, 5, 0, 7];
-
-      function generateFretBoard() {
-        // すべてのfretを削除する。
-        document.getElementById("fretboard").innerHTML = "";
-        // ボタンの表記を更新する。
-        // メジャーなら背景色を黄色に、マイナーなら背景色を青にする。
-        if (scale === "major") {
-          document.getElementById("button-change-scale").style.backgroundColor =
-            "#880";
-          document.getElementById("button-change-scale").innerHTML = "メジャー😊";
-        } else {
-          document.getElementById("button-change-scale").style.backgroundColor =
-            "#27a";
-          document.getElementById("button-change-scale").innerHTML = "マイナー🌝";
-        }
-        // Create 22 frets。 これらの要素は横に並ぶが、中身は縦に並ぶ。
-        for (let i = 0; i < 22; i++) {
-          let fret = document.createElement("div");
-          fret.id = "fret" + i;
-          fret.className = "fret";
-          // 縦に並ぶ 6弦分の div 要素を作成する。
-          for (let j = 0; j < 6; j++) {
-            let string = document.createElement("div");
-            string.id = "string" + j;
-            string.className = "string";
-            // 6弦から1弦までの"j"fretの音名をnotesのindexで配列に格納する
-            let note_index = (openStrings[j] + i) % notes.length;
-            // noteに合わせた背景色を設定
-            string.style.backgroundColor = colors[note_index];
-            // focusNoteIndexからの相対度数を表示する。短3度,長三度,完全4度,増4度,完全5度,短7度,長7度にはm3,M3,P4,A4,P5,m7,M7を表示する
-            let relativeNoteIndex =
-              (note_index - focusNoteIndex + notes.length) % notes.length;
-            if (relativeNoteIndex === 0) {
-              note = "<note-root>R</note-root>";
-            } else if (relativeNoteIndex === 1) {
-              note = "<note-9th>m9</note-9th>";
-            } else if (relativeNoteIndex === 2) {
-              note = "<note-9th>M9</note-9th>";
-            } else if (relativeNoteIndex === 3) {
-              note = "<note-3rd>m3</note-3rd>";
-            } else if (relativeNoteIndex === 4) {
-              note = "<note-3rd>M3</note-3rd>";
-            } else if (relativeNoteIndex === 5) {
-              note = "<note-11th>11</note-11th>";
-            } else if (relativeNoteIndex === 6) {
-              note = "";
-            } else if (relativeNoteIndex === 7) {
-              note = "<note-5th>5</note-5th>";
-            } else if (relativeNoteIndex === 8) {
-              note = "";
-            } else if (relativeNoteIndex === 9) {
-              note = "";
-            } else if (relativeNoteIndex === 10) {
-              note = "<note-7th>m7</note-7th>";
-            } else if (relativeNoteIndex === 11) {
-              note = "<note-7th>M7</note-7th>";
-            }
-            // ただし、j=5の場合はrelativeNoteIndex=0以外は表示しない。
-            if (j === 5 && relativeNoteIndex !== 0) {
-              note = "";
-            }
-            string.innerHTML = `${note} ${notes[note_index]}`;
-
-            // scaleがmajorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
-            if (scale === "major") {
-              const majorNoteIndexIndices_penta = [0, 2, 4, 7, 9];
-              const majorNoteIndexIndices = [5, 11];
-              if (majorNoteIndexIndices_penta.includes(relativeNoteIndex)) {
-                string.style.borderRight = "3px solid #0af";
-              } else if (majorNoteIndexIndices.includes(relativeNoteIndex)) {
-                string.style.borderRight = "3px #0af dashed";
-              }
-            }
-            // scaleがminorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
-            if (scale === "minor") {
-              const minorNoteIndexIndices_penta = [0, 3, 5, 7, 10];
-              const minorNoteIndexIndices = [2, 8];
-              if (minorNoteIndexIndices_penta.includes(relativeNoteIndex)) {
-                string.style.borderRight = "3px solid #0af";
-              } else if (minorNoteIndexIndices.includes(relativeNoteIndex)) {
-                string.style.borderRight = "3px #0af dashed";
-              }
-            }
-            document.getElementById("fretboard").appendChild(fret);
-            fret.appendChild(string);
-            // クリックイベントを追加する。
-            string.addEventListener("click", function () {
-              // クリックされた音名indexをfocusNoteIndexに格納する。
-              focusNoteIndex = note_index;
-              // すべてのfretを削除する。
-              document.getElementById("fretboard").innerHTML = "";
-              // fretを再生成する。
-              generateFretBoard();
-            });
-          }
-          // 3,5,7,9,12,15,17,19,21フレットに点を表示する。
-          if (
-            i === 3 ||
-            i === 5 ||
-            i === 7 ||
-            i === 9 ||
-            i === 15 ||
-            i === 17 ||
-            i === 19 ||
-            i === 21
-          ) {
-            let dot = document.createElement("div");
-            dot.className = "dot";
-            fret.appendChild(dot);
-          } else if( i === 12 ){
-            let dot = document.createElement("div");
-            dot.className = "double-dot";
-            fret.appendChild(dot);
-          } else {
-            let dot = document.createElement("div");
-            dot.className = "dot";
-            fret.appendChild(dot);
-            dot.style.visibility = "hidden";
-          }
-        }
-
-        // Function to highlight frets
-        function highlightFrets() {
-          // Change the range as per your requirement
-          for (let i = 5; i < 10; i++) {
-            document.getElementById("fret" + i).classList.add("highlight");
-          }
-        }
-      }
-      generateFretBoard();
-    </script>
   </body>
 </html>
