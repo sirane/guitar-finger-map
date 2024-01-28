@@ -118,8 +118,7 @@ note-11th {
 
 #fret-control {
   width: 95%;
-  height: 80px;
-  border: 1px solid #666;
+  height: 50px;
   border-radius: 5px;
   margin: 0 auto;
   display: flex;
@@ -128,6 +127,11 @@ note-11th {
   align-items: center;
   position:fixed;
   left:0;
+  font-size: small;
+}
+#fret-control-bottom-space
+{
+  margin-top:50px;
 }
 
 #button-change-scale {
@@ -147,12 +151,8 @@ note-11th {
   padding: 2px 5px;
   background-color: #ccc;
 }
-.radio-group input {
-  font-size: large;
-}
 
 .idea-note{
-  margin-top:100px;
   border-radius: 5px;
   color:#444;
   background-color: #ddd;

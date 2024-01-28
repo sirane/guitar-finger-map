@@ -5,18 +5,18 @@ let focusNoteIndex = 7;
 // 12音名をAからGまで配列に格納する。
 const notes = ["A", "As", "B", "C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs"];
 // 12音名ごとの色を配列に格納する。シャープやフレットは真っ白で、他の色はそれぞれ違った薄い色を採用する。
-const colors = [
-  "#ffccbb", // A
+const sound_colors = [
+  "#ffccbb", // 1
+  "#ffffff", // 1s
+  "#ffccdd", // 2
+  "#ccffff", // 3
   "#ffffff",
-  "#ffccdd",
-  "#ccffff",
+  "#ccddff", //  4
   "#ffffff",
-  "#ccddff", // D
+  "#ddccff", // 5
+  "#bbffdd", // 6
   "#ffffff",
-  "#ddccff",
-  "#bbffdd",
-  "#ffffff",
-  "#eeffcc", // G
+  "#eeffcc", // 7
   "#ffffff",
 ];
 const CSS_FRET_BORDER_WEIGHT = "5px";
@@ -118,7 +118,8 @@ function generateFretBoard() {
 
     // 背景色を設定
     if (display_mode === DISPLAY_MODE_CODE) {
-      string.style.backgroundColor = colors[note_index];
+      // string.style.backgroundColor = sound_colors[note_index];
+      string.style.backgroundColor = sound_colors[relativeNoteIndex];
     } else if (display_mode === DISPLAY_MODE_PENTA) {
       string.style.backgroundColor = 
         is_penta ? "#bbeeff" : is_in_scale_not_penta ? "#ffffff" : "#dddddd";

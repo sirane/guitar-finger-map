@@ -26,54 +26,58 @@
       >
         Major/Minor
       </button>
-      <!-- radio buttons: display mode -->
-      <div>
-        <div class="radio-group">
-          <item-caption>code階名</item-caption>
-          <input
-            type="radio"
-            id="radio-code-info-1"
-            name="code-info"
-            value="degree-name"
-            checked
-            onchange="generateFretBoard();"
-          />
-          <label for="radio-code-info-1">出す</label>
-          <input
-            type="radio"
-            id="radio-code-info-2"
-            name="code-info"
-            value="gone"
-            onchange="generateFretBoard();"
-          />
-          <label for="radio-code-info-2">消す</label>
-        </div>
-        <div class="radio-group">
-          <item-caption>表示モード</item-caption>
-          <input
-            type="radio"
-            id="radio-display-mode-1"
-            name="display-mode"
-            value="code"
-            checked
-            onchange="generateFretBoard();"
-          />
-          <label for="radio-display-mode-1">code-tones/scale</label>
-          <input
-            type="radio"
-            id="radio-display-mode-2"
-            name="display-mode"
-            value="penta"
-            onchange="generateFretBoard();"
-          />
-          <label for="radio-display-mode-2">penta map</label>
-        </div>
+    </div>
+    <div id="fret-control-bottom-space"></div>
+    <!-- radio buttons: display mode -->
+    <div>
+      <div class="radio-group">
+        <item-caption>code階名</item-caption>
+        <input
+          type="radio"
+          id="radio-code-info-1"
+          name="code-info"
+          value="degree-name"
+          checked
+          onchange="generateFretBoard();"
+        />
+        <label for="radio-code-info-1">出す</label>
+        <input
+          type="radio"
+          id="radio-code-info-2"
+          name="code-info"
+          value="gone"
+          onchange="generateFretBoard();"
+        />
+        <label for="radio-code-info-2">消す</label>
       </div>
+      <div class="radio-group">
+        <item-caption>表示モード</item-caption>
+        <div>
+        <input
+          type="radio"
+          id="radio-display-mode-1"
+          name="display-mode"
+          value="code"
+          checked
+          onchange="generateFretBoard();"
+        />
+        <label for="radio-display-mode-1">code-tones/scale</label>
+      </div><div>
+        <input
+          type="radio"
+          id="radio-display-mode-2"
+          name="display-mode"
+          value="penta"
+          onchange="generateFretBoard();"
+        />
+        <label for="radio-display-mode-2">penta map</label>
+      </div></div>
     </div>
 
     <div class="idea-note">
       <pre>
         idea note
+        メジャーマイナーも選べるように
         コード進行サンプルも出したいかも
         ダイアトニックがわかるといいかも
       </pre>
