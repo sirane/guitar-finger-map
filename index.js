@@ -121,8 +121,11 @@ function generateFretBoard() {
       // string.style.backgroundColor = sound_colors[note_index];
       string.style.backgroundColor = sound_colors[relativeNoteIndex];
     } else if (display_mode === DISPLAY_MODE_PENTA) {
-      string.style.backgroundColor = 
-        is_penta ? "#bbeeff" : is_in_scale_not_penta ? "#ffffff" : "#dddddd";
+      string.style.backgroundColor =
+        relativeNoteIndex == 0 ? "#ccddff" :
+          is_penta ? "#bbeeff" :
+            is_in_scale_not_penta ? "#ffffff" :
+              "#dddddd";
     }
 
     // 内容テキストを設定
@@ -142,13 +145,13 @@ function generateFretBoard() {
       } else if (relativeNoteIndex === 5) {
         note = "<note-11th>11</note-11th>";
       } else if (relativeNoteIndex === 6) {
-        note = "";
+        note = "<note-11th>11</note-11th>";
       } else if (relativeNoteIndex === 7) {
         note = "<note-5th>5</note-5th>";
       } else if (relativeNoteIndex === 8) {
-        note = "";
+        note = "m6";
       } else if (relativeNoteIndex === 9) {
-        note = "";
+        note = "M6";
       } else if (relativeNoteIndex === 10) {
         note = "<note-7th>m7</note-7th>";
       } else if (relativeNoteIndex === 11) {
