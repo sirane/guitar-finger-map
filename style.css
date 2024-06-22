@@ -17,7 +17,7 @@ item-caption {
 #fretboard {
   width: 100%;
   height: 100%;
-  color: #666;
+  color: #aaa;
   border: 1px solid black;
   display: flex;
   flex-direction: row;
@@ -73,54 +73,56 @@ note-root {
   font-weight: bold;
   flex-basis: auto;
   margin-right: 5px;
-  border-bottom: #00f 3px solid;
+  border-bottom: #00d 4px solid;
 }
 note-3rd {
   width: 20px;
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
-  color: #0af;
+  color: #08f;
   margin-right: 5px;
-  border-bottom: #00f 3px solid;
 }
 note-5th {
   width: 20px;
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
-  color: #0af;
+  color: #08f;
   margin-right: 5px;
-  border-bottom: #00f 3px solid;
 }
 note-7th {
   width: 20px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 400;
   flex-basis: auto;
-  color: #8a8;
+  color: #8ca;
   margin-right: 5px;
-  border-bottom: #f6f 3px solid;
 }
 note-9th {
   width: 20px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 400;
   flex-basis: auto;
-  color: #a8f;
+  color: #8af;
   margin-right: 5px;
-  border-bottom: #f6f 3px solid;
 }
 note-11th {
   width: 20px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 400;
   flex-basis: auto;
   color: #aaf;
   margin-right: 5px;
-  border-bottom: #f6f 3px solid;
 }
-
+note-13th {
+  width: 20px;
+  text-align: center;
+  font-weight: 400;
+  flex-basis: auto;
+  color: #8cf;
+  margin-right: 5px;
+}
 #fret-control {
   width: 95%;
   height: 50px;

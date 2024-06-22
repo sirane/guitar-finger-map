@@ -14,11 +14,18 @@
     <div id="fret-control">
       <!-- メジャーかマイナーか切り替えるボタン。scaleを更新しgenerateFretBoard()を呼び出す -->
       <button
+        id="button-change-scale-prev"
+        onclick="switchScaleToPrev();generateFretBoard();"
+      >
+      ←
+      </button>
+      <button
         id="button-change-scale"
         onclick="switchScaleToNext();generateFretBoard();"
       >
       Scale
       </button>
+      <span id="scale-index"></span>
     </div>
     <div id="fret-control-bottom-space"></div>
     <!-- radio buttons: display mode -->
@@ -44,7 +51,7 @@
         <label for="radio-code-info-2">音名</label>
       </div>
       <div class="radio-group">
-        <item-caption>表示モード</item-caption>
+        <item-caption>back-color</item-caption>
         <div>
         <input
           type="radio"
@@ -54,7 +61,7 @@
           checked
           onchange="generateFretBoard();"
         />
-        <label for="radio-display-mode-1">code-tones/scale</label>
+        <label for="radio-display-mode-1">まっしろ</label>
       </div><div>
         <input
           type="radio"
@@ -63,14 +70,14 @@
           value="penta"
           onchange="generateFretBoard();"
         />
-        <label for="radio-display-mode-2">penta map</label>
+        <label for="radio-display-mode-2">penta</label>
       </div></div>
     </div>
 
     <div class="idea-note">
       <pre>
-        idea note
-        メジャーマイナーも選べるように
+        idea-note
+        オクターブ差も見えると良いかも、ブロックが浮き出るはず
         コード進行サンプルも出したいかも
         ダイアトニックがわかるといいかも
       </pre>
