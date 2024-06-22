@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="index.js"></script>
     <meta charset="utf-8" />
-    <title>ぎたたに慣れてこウェイウェイ</title>
+    <title>ぎたたに慣れてくぜ</title>
   </head>
   <body>
     <div id="fretboard">
@@ -15,23 +15,16 @@
       <!-- メジャーかマイナーか切り替えるボタン。scaleを更新しgenerateFretBoard()を呼び出す -->
       <button
         id="button-change-scale"
-        onclick="
-      if (scale === 'major') {
-        scale = 'minor';
-      } else {
-        scale = 'major';
-      }
-        generateFretBoard();
-    "
+        onclick="switchScaleToNext();generateFretBoard();"
       >
-        Major/Minor
+      Scale
       </button>
     </div>
     <div id="fret-control-bottom-space"></div>
     <!-- radio buttons: display mode -->
     <div>
       <div class="radio-group">
-        <item-caption>code階名</item-caption>
+        <item-caption>label</item-caption>
         <input
           type="radio"
           id="radio-code-info-1"
@@ -40,7 +33,7 @@
           checked
           onchange="generateFretBoard();"
         />
-        <label for="radio-code-info-1">出す</label>
+        <label for="radio-code-info-1">階名</label>
         <input
           type="radio"
           id="radio-code-info-2"
@@ -48,7 +41,7 @@
           value="gone"
           onchange="generateFretBoard();"
         />
-        <label for="radio-code-info-2">消す</label>
+        <label for="radio-code-info-2">音名</label>
       </div>
       <div class="radio-group">
         <item-caption>表示モード</item-caption>

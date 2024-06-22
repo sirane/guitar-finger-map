@@ -80,6 +80,7 @@ note-3rd {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
+  color: #0af;
   margin-right: 5px;
   border-bottom: #00f 3px solid;
 }
@@ -88,6 +89,7 @@ note-5th {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
+  color: #0af;
   margin-right: 5px;
   border-bottom: #00f 3px solid;
 }
@@ -96,6 +98,7 @@ note-7th {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
+  color: #8a8;
   margin-right: 5px;
   border-bottom: #f6f 3px solid;
 }
@@ -104,6 +107,7 @@ note-9th {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
+  color: #a8f;
   margin-right: 5px;
   border-bottom: #f6f 3px solid;
 }
@@ -112,6 +116,7 @@ note-11th {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
+  color: #aaf;
   margin-right: 5px;
   border-bottom: #f6f 3px solid;
 }

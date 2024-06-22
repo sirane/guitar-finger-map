@@ -1,24 +1,58 @@
-// メジャーかマイナーかのスケールを格納する
-let scale = "minor";
+
 // フォーカスされている音名indexを格納する。
 let focusNoteIndex = 7;
 // 12音名をAからGまで配列に格納する。
 const notes = ["A", "As", "B", "C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs"];
 // 12音名ごとの色を配列に格納する。シャープやフレットは真っ白で、他の色はそれぞれ違った薄い色を採用する。
 const sound_colors = [
-  "#ffccbb", // 1
+  "#ffffff", // 1
   "#ffffff", // 1s
-  "#ffccdd", // 2
-  "#ccffff", // 3
+  "#ffffff", // 2
+  "#ffffff", // 3
   "#ffffff",
-  "#ccddff", //  4
+  "#ffffff", //  4
   "#ffffff",
-  "#ddccff", // 5
-  "#bbffdd", // 6
+  "#ffffff", // 5
+  "#ffffff", // 6
   "#ffffff",
-  "#eeffcc", // 7
+  "#ffffff", // 7
   "#ffffff",
 ];
+// 各種スケールの設定
+const scales = [
+  {"indices":[0, 2, 4, 5, 7, 9, 11], "penta": [0, 2, 4, 7, 9] ,"label":"Ion(Maj)", "bgcolor":"#000"},
+  {"indices":[0, 2, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Aeo(min)", "bgcolor":"#000"},
+  {"indices":[0, 2, 3, 5, 7, 9, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Dori", "bgcolor":"#000"},
+  {"indices":[0, 1, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Phry", "bgcolor":"#000"},
+  {"indices":[0, 2, 4, 6, 7, 9, 11], "penta": [0, 2, 4, 7, 9] ,"label":"Lydi", "bgcolor":"#000"},
+  {"indices":[0, 2, 4, 5, 7, 9, 10], "penta": [0, 2, 4, 7, 9] ,"label":"Mixo", "bgcolor":"#000"},
+  {"indices":[0, 1, 3, 5, 6, 8, 10], "penta": [0, 3, 5, 6, 10] ,"label":"Loca", "bgcolor":"#000"},
+  {"indices":[0, 1, 3, 4, 6, 8, 10], "penta": [0, 3, 4, 7, 10] ,"label":"Altered", "bgcolor":"#000"}, 
+  {"indices":[0, 2, 3, 5, 7, 9, 11], "penta": [0, 3, 5, 7, 9] ,"label":"Melo-m", "bgcolor":"#000"},
+]
+
+// 現在のスケール名を格納する
+let currentScaleIndex = 0;
+let currentScale = scales[currentScaleIndex];
+
+// currentScaleを次のものに変更する
+function switchScaleToNext(){
+  currentScaleIndex = (currentScaleIndex + 1) % scales.length;
+  currentScale = scales[currentScaleIndex];
+  return currentScale
+}
+
+function update_control_appearance() {
+  let scale_name_bgcolor = currentScale["bgcolor"];
+  let scale_name_inner_html = currentScale["label"];
+  scale_name_inner_html = ` ${notes[focusNoteIndex]} ${scale_name_inner_html}`;
+  document.getElementById("button-change-scale").style.backgroundColor =
+    scale_name_bgcolor;
+  document.getElementById("button-change-scale").innerHTML =
+    scale_name_inner_html;
+  console.debug("scale_name_inner_html", scale_name_inner_html);
+}
+
 const CSS_FRET_BORDER_WEIGHT = "5px";
 const CSS_FRET_BORDER_COLOR_FOCUSED = "#88d";
 // 0fretの音名(EBGDAE) をnotesのindexで配列に格納する。
@@ -97,22 +131,12 @@ function generateFretBoard() {
     let is_penta = false;
     let is_in_scale = false;
     let is_in_scale_not_penta = false;
-    // scaleがmajorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
-    if (scale === "major") {
-      const majorNoteIndexIndices_penta = [0, 2, 4, 7, 9];
-      const majorNoteIndexIndices = [5, 11];
-      is_penta = majorNoteIndexIndices_penta.includes(relativeNoteIndex);
-      is_in_scale = majorNoteIndexIndices.includes(relativeNoteIndex);
+    if(currentScale){
+      is_penta = currentScale.penta.includes(relativeNoteIndex);
+      is_in_scale = currentScale.indices.includes(relativeNoteIndex);
       is_in_scale_not_penta = is_in_scale && !is_penta;
     }
-    // scaleがminorの場合、relativeNoteIndexからの相対度数で見た目をfocus。
-    if (scale === "minor") {
-      const minorNoteIndexIndices_penta = [0, 3, 5, 7, 10];
-      const minorNoteIndexIndices = [2, 8];
-      is_penta = minorNoteIndexIndices_penta.includes(relativeNoteIndex);
-      is_in_scale = minorNoteIndexIndices.includes(relativeNoteIndex);
-      is_in_scale_not_penta = is_in_scale && !is_penta;
-    }
+
     // 属性算出は完了。
     // 以下より、表示制御を行う。------------------------------------------------
 
@@ -143,9 +167,9 @@ function generateFretBoard() {
       } else if (relativeNoteIndex === 4) {
         note = "<note-3rd>M3</note-3rd>";
       } else if (relativeNoteIndex === 5) {
-        note = "<note-11th>11</note-11th>";
+        note = "<note-11th></note-11th>";
       } else if (relativeNoteIndex === 6) {
-        note = "<note-11th>11</note-11th>";
+        note = "<note-11th>♭5</note-11th>";
       } else if (relativeNoteIndex === 7) {
         note = "<note-5th>5</note-5th>";
       } else if (relativeNoteIndex === 8) {
@@ -161,8 +185,11 @@ function generateFretBoard() {
       if (j === 5 && relativeNoteIndex !== 0) {
         note = "";
       }
+    }else{
+      note = notes[note_index]
     }
-    string.innerHTML = `${note} ${notes[note_index]}`;
+    
+    string.innerHTML = note;
 
     // ボーダーラインを設定
     if (is_penta) {
@@ -192,22 +219,7 @@ function generateFretBoard() {
     }
   }
 }
+
 window.onload = function () {
   generateFretBoard();
 };
-
-function update_control_appearance() {
-  if (scale === "major") {
-    scale_name_bgcolor = "#880";
-    scale_name_inner_html = "メジャー😊";
-  } else {
-    scale_name_bgcolor = "#27a";
-    scale_name_inner_html = "マイナー🌝";
-  }
-  scale_name_inner_html = ` ${notes[focusNoteIndex]} ${scale_name_inner_html}`;
-  document.getElementById("button-change-scale").style.backgroundColor =
-    scale_name_bgcolor;
-  document.getElementById("button-change-scale").innerHTML =
-    scale_name_inner_html;
-  console.debug("scale_name_inner_html", scale_name_inner_html);
-}
