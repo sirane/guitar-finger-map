@@ -47,16 +47,17 @@ const sound_colors = [
 ];
 // 各種スケールの設定
 const scales = [
-  {"indices":[0, 2, 4, 5, 7, 9, 11], "penta": [0, 2, 4, 7, 9] ,"label":"Ionian(Maj)", "bgcolor":"#000"},
-  {"indices":[0, 2, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Aeolian(Min)", "bgcolor":"#000"},
-  {"indices":[0, 2, 3, 5, 7, 9, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Dorian", "bgcolor":"#000"},
-  {"indices":[0, 1, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10] ,"label":"Phrygian", "bgcolor":"#000"},
-  {"indices":[0, 2, 4, 6, 7, 9, 11], "penta": [0, 2, 4, 7, 9] ,"label":"Lydian", "bgcolor":"#000"},
-  {"indices":[0, 2, 4, 5, 7, 9, 10], "penta": [0, 2, 4, 7, 9] ,"label":"Mixolydian", "bgcolor":"#000"},
-  {"indices":[0, 1, 3, 5, 6, 8, 10], "penta": [0, 3, 5, 6, 10] ,"label":"Locrian", "bgcolor":"#000"},
-  {"indices":[0, 1, 3, 4, 6, 8, 10], "penta": [0, 3, 4, 7, 10] ,"label":"Altered", "bgcolor":"#000"}, 
-  {"indices":[0, 2, 3, 5, 7, 9, 11], "penta": [0, 3, 5, 7, 9] ,"label":"Melodic Min", "bgcolor":"#000"},
+  {"indices":[0, 2, 4, 5, 7, 9, 11], "penta": [0, 2, 4, 7, 9], "label":"Ionian(Maj)", "bgcolor":"#000", "characteristic": [], "avoid": [5]},
+  {"indices":[0, 2, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10], "label":"Aeolian(Min)", "bgcolor":"#000", "characteristic": [8, 10], "avoid": [8]},
+  {"indices":[0, 2, 3, 5, 7, 9, 10], "penta": [0, 3, 5, 7, 10], "label":"Dorian", "bgcolor":"#000", "characteristic": [9], "avoid": [9]},
+  {"indices":[0, 1, 3, 5, 7, 8, 10], "penta": [0, 3, 5, 7, 10], "label":"Phrygian", "bgcolor":"#000", "characteristic": [1], "avoid": [1]},
+  {"indices":[0, 2, 4, 6, 7, 9, 11], "penta": [0, 2, 4, 7, 9], "label":"Lydian", "bgcolor":"#000", "characteristic": [6], "avoid": []},
+  {"indices":[0, 2, 4, 5, 7, 9, 10], "penta": [0, 2, 4, 7, 9], "label":"Mixolydian", "bgcolor":"#000", "characteristic": [10], "avoid": [4]},
+  {"indices":[0, 1, 3, 5, 6, 8, 10], "penta": [0, 3, 5, 6, 10], "label":"Locrian", "bgcolor":"#000", "characteristic": [1, 6], "avoid": [5]},
+  {"indices":[0, 1, 3, 4, 6, 8, 10], "penta": [0, 3, 4, 7, 10], "label":"Altered", "bgcolor":"#000", "characteristic": [1, 3, 4, 6, 8, 10], "avoid": []}, 
+  {"indices":[0, 2, 3, 5, 7, 9, 11], "penta": [0, 3, 5, 7, 9], "label":"Melodic Min", "bgcolor":"#000", "characteristic": [11], "avoid": []},
 ]
+
 
 // 現在のスケール名を格納する
 let currentScaleIndex = 0;
@@ -85,8 +86,10 @@ function update_control_appearance() {
   console.debug("scale_name_inner_html", scale_name_inner_html);
 }
 
-const CSS_FRET_BORDER_WEIGHT = "5px";
-const CSS_FRET_BORDER_COLOR_FOCUSED = "#88d";
+const CSS_BORDER_PENTA = "5px solid #88d"
+const CSS_BORDER_CHARACTERISTIC = "5px solid #a3d"
+const CSS_BORDER_NONPENTA = "5px dotted #88d"
+const CSS_BORDER_NONSCALE = "1px dotted #888"
 // 0fretの音名(EBGDAE) をnotesのindexで配列に格納する。
 const openStrings = [7, 2, 10, 5, 0, 7];
 const focusDots = [3,5,7,9,15,17,19,21];
@@ -152,12 +155,14 @@ function generateFretBoard() {
       (note_index - focusNoteIndex + inner_html_for_note_index.length) % inner_html_for_note_index.length;
     // scaleごとのセル属性を決定
     let is_penta = false;
+    let is_characteristic = false;
     let is_in_scale = false;
     let is_in_scale_not_penta = false;
     if(currentScale){
-      is_penta = currentScale.penta.includes(relativeNoteIndex);
-      is_in_scale = currentScale.indices.includes(relativeNoteIndex);
-      is_in_scale_not_penta = is_in_scale && !is_penta;
+      is_penta = currentScale.penta.includes(relativeNoteIndex)
+      is_characteristic = currentScale.characteristic.includes(relativeNoteIndex)
+      is_in_scale = currentScale.indices.includes(relativeNoteIndex)
+      is_in_scale_not_penta = is_in_scale && !is_penta
     }
 
     // 属性算出は完了。
@@ -179,12 +184,14 @@ function generateFretBoard() {
     // focusNoteIndexからの相対度数を表示する。短3度,長三度,完全4度,増4度,完全5度,短7度,長7度にはm3,M3,P4,A4,P5,m7,M7を表示する
     note = "";
     if (is_display_degree_name) {
+      // 階名表示
       note = inner_html_for_degree_index[relativeNoteIndex%12];
       // ただし、j=5の場合はrelativeNoteIndex=0以外は表示しない。
       // if (j === 5 && relativeNoteIndex !== 0) {
       //   note = "";
       // }
     }else{
+      // 音名表示
       note = inner_html_for_note_index[note_index%12]
       // ルート音の場合は強調
       if ( relativeNoteIndex == 0) {
@@ -200,11 +207,19 @@ function generateFretBoard() {
     
     string.innerHTML = note;
 
-    // ボーダーラインを設定
-    if (is_penta) {
-      string.style.borderRight = `${CSS_FRET_BORDER_WEIGHT} solid ${CSS_FRET_BORDER_COLOR_FOCUSED}`;
+    // スケールボーダーの表示を設定
+    if( is_characteristic ){
+      //特徴音
+      string.style.borderRight = CSS_BORDER_CHARACTERISTIC
+    }else if (is_penta) {
+      // ペンタ音
+      string.style.borderRight = CSS_BORDER_PENTA
     } else if (is_in_scale_not_penta) {
-      string.style.borderRight = `${CSS_FRET_BORDER_WEIGHT} dotted ${CSS_FRET_BORDER_COLOR_FOCUSED}`;
+      // ペンタではないスケール音
+      string.style.borderRight = CSS_BORDER_NONPENTA
+    }else{
+      // アヴォイドノート
+      string.style.borderRight = CSS_BORDER_NONSCALE
     }
 
     document.getElementById("fretboard").appendChild(fret);
