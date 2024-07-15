@@ -3,11 +3,11 @@
 let focusNoteIndex = 7;
 const inner_html_for_degree_index = [
   "<note-root>R</note-root>",
-  "<note-9th>m9</note-9th>",
-  "<note-9th>M9</note-9th>",
+  "<note-9th>9</note-9th>",
+  "<note-sus>su2</note-sus>",
   "<note-3rd>m3</note-3rd>",
   "<note-3rd>M3</note-3rd>",
-  "<note-11th></note-11th>",
+  "<note-sus>su4</note-sus>",
   "<note-11th>♭5</note-11th>",
   "<note-5th>5</note-5th>",
   "<note-13th>13</note-13th>",
@@ -86,8 +86,9 @@ function update_control_appearance() {
   console.debug("scale_name_inner_html", scale_name_inner_html);
 }
 
-const CSS_BORDER_PENTA = "5px solid #88d"
-const CSS_BORDER_CHARACTERISTIC = "5px solid #a3d"
+const CSS_BORDER_PENTA = "8px solid #88d"
+const CSS_BORDER_CHARACTERISTIC_PENTA = "8px solid #a3d"
+const CSS_BORDER_CHARACTERISTIC = "5px dotted #a3d"
 const CSS_BORDER_NONPENTA = "5px dotted #88d"
 const CSS_BORDER_NONSCALE = "1px dotted #888"
 // 0fretの音名(EBGDAE) をnotesのindexで配列に格納する。
@@ -175,7 +176,7 @@ function generateFretBoard() {
     } else if (display_mode === DISPLAY_MODE_PENTA) {
       string.style.backgroundColor =
         relativeNoteIndex == 0 ? "#ccddff" :
-          is_penta ? "#bbeeff" :
+          is_penta ? "#eef8ff" :
             is_in_scale_not_penta ? "#ffffff" :
               "#dddddd";
     }
@@ -208,7 +209,10 @@ function generateFretBoard() {
     string.innerHTML = note;
 
     // スケールボーダーの表示を設定
-    if( is_characteristic ){
+    if( is_characteristic && is_penta ){
+      //特徴音
+      string.style.borderRight = CSS_BORDER_CHARACTERISTIC_PENTA
+    }else if( is_characteristic ){
       //特徴音
       string.style.borderRight = CSS_BORDER_CHARACTERISTIC
     }else if (is_penta) {

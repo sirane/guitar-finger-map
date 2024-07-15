@@ -46,6 +46,7 @@ item-caption {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  margin-top:1px;
 }
 .highlight {
   background-color: yellow;
@@ -68,19 +69,19 @@ item-caption {
 }
 note-root {
   width: 20px;
-  color: #00f;
+  color: #00c;
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
   margin-right: 5px;
-  border-bottom: #00d 4px solid;
+  border-bottom: #00c 4px solid;
 }
 note-3rd {
   width: 20px;
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
-  color: #08f;
+  color: #08d;
   margin-right: 5px;
 }
 note-5th {
@@ -88,7 +89,7 @@ note-5th {
   text-align: center;
   font-weight: bold;
   flex-basis: auto;
-  color: #08f;
+  color: #08d;
   margin-right: 5px;
 }
 note-7th {
@@ -96,7 +97,7 @@ note-7th {
   text-align: center;
   font-weight: 400;
   flex-basis: auto;
-  color: #8ca;
+  color: #8bb;
   margin-right: 5px;
 }
 note-9th {
@@ -104,7 +105,7 @@ note-9th {
   text-align: center;
   font-weight: 400;
   flex-basis: auto;
-  color: #8af;
+  color: #38f;
   margin-right: 5px;
 }
 note-11th {
@@ -112,7 +113,7 @@ note-11th {
   text-align: center;
   font-weight: 400;
   flex-basis: auto;
-  color: #aaf;
+  color: #88f;
   margin-right: 5px;
 }
 note-13th {
@@ -120,7 +121,14 @@ note-13th {
   text-align: center;
   font-weight: 400;
   flex-basis: auto;
-  color: #8cf;
+  color: #4bf;
+  margin-right: 5px;
+}
+note-sus {
+  width: 20px;
+  color: #6b3;
+  text-align: center;
+  flex-basis: auto;
   margin-right: 5px;
 }
 #fret-control {
